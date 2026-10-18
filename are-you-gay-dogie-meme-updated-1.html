@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101014">
+<title>Are You Gay? 💀</title>
+<style>
+:root{--bg:#101014;--panel:#1c1c25;--yellow:#ffe45c;--pink:#ff4fa3;--cyan:#56e8ff;--white:#f7f7fb}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Impact,"Arial Black",system-ui,sans-serif;color:var(--white)}
+body{background:radial-gradient(circle at 15% 20%,#42205d 0,transparent 30%),radial-gradient(circle at 85% 75%,#123c4b 0,transparent 35%),var(--bg);overflow-x:hidden}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+.page{display:none;min-height:100svh;position:relative;overflow:hidden;padding:24px}
+.page.active{display:flex;align-items:center;justify-content:center;animation:appear .35s ease both}
+@keyframes appear{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.meme-rain{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.floater{position:absolute;font-family:system-ui,sans-serif;font-size:clamp(26px,5vw,60px);animation:float 4s ease-in-out infinite;filter:drop-shadow(2px 4px 0 #000)}
+@keyframes float{50%{transform:translateY(-18px) rotate(8deg)}}
+.f1{left:4%;top:8%}.f2{right:5%;top:12%;animation-delay:-1s}.f3{left:7%;bottom:10%;animation-delay:-2s}.f4{right:8%;bottom:8%;animation-delay:-.5s}
+.wrap{width:min(1000px,100%);position:relative;z-index:2;text-align:center}
+.top-tag{display:inline-block;background:var(--yellow);color:#151515;padding:7px 13px;transform:rotate(-2deg);font:900 13px/1.2 system-ui,sans-serif;letter-spacing:.08em;border:3px solid #000;box-shadow:5px 5px 0 #000}
+h1{font-size:clamp(3rem,10vw,7.8rem);line-height:.9;letter-spacing:-.05em;margin:24px 0 12px;text-transform:uppercase;text-shadow:5px 5px 0 #000,-3px -3px 0 var(--pink),3px -3px 0 var(--cyan);transform:rotate(-1deg)}
+.subtitle{font:800 clamp(1rem,2.8vw,1.3rem)/1.4 system-ui,sans-serif;color:#ddd;margin:0 auto 22px}
+.meme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:760px;margin:20px auto}
+.meme{background:#f4f0e8;color:#151515;border:4px solid #000;box-shadow:6px 6px 0 #000;padding:12px 8px;min-height:125px;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(var(--tilt));font-family:system-ui,sans-serif;font-weight:1000}
+.meme .pic{font-size:clamp(35px,6vw,58px);line-height:1.15;filter:drop-shadow(2px 3px 0 #bbb)}
+    .meme .sticker{width:100%;height:88px;object-fit:contain;border-radius:5px;mix-blend-mode:multiply}
+    .sticker-note{font:700 10px/1.3 system-ui,sans-serif;color:#888;margin-top:10px}
+    .sticker-note a{color:inherit;text-decoration:underline}
+.meme .caption{font-size:clamp(10px,1.8vw,14px);text-transform:uppercase;line-height:1.2;margin-top:7px}
+.meme:nth-child(2){background:#d7faff}.meme:nth-child(3){background:#ffd7ec}.meme:nth-child(4){background:#fff29b}.meme:nth-child(5){background:#e1d8ff}.meme:nth-child(6){background:#d8ffd9}
+.buttons{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;margin:25px auto 12px;min-height:80px}
+.choice{border:4px solid #000;padding:14px 30px;min-width:120px;box-shadow:6px 6px 0 #000;font-size:1.25rem;font-weight:1000;transition:transform .25s,padding .25s,font-size .25s}
+#yes{background:var(--yellow);color:#111;transform:rotate(2deg)}
+#no{background:#f6f6f6;color:#111;transform:rotate(-2deg)}
+.choice:active{box-shadow:2px 2px 0 #000;translate:4px 4px}
+.hint{font:800 13px/1.4 system-ui,sans-serif;color:#bfc4d2;min-height:22px}
+.bottom-note{font:900 11px system-ui,sans-serif;color:#858998;letter-spacing:.12em;margin-top:14px}
+#result{position:fixed;inset:0;z-index:10;background:#0b0b0ef5;display:none;align-items:center;justify-content:center;text-align:center;padding:24px}
+#result.show{display:flex;animation:appear .2s ease}
+.result-inner{max-width:760px}
+.big-emoji{font:normal clamp(90px,20vw,190px)/1 system-ui,sans-serif;animation:shake .4s infinite alternate}
+@keyframes shake{from{transform:rotate(-8deg) scale(.96)}to{transform:rotate(8deg) scale(1.05)}}
+#result h2{font-size:clamp(3.5rem,12vw,8rem);line-height:.9;margin:18px 0;color:var(--yellow);text-shadow:7px 7px #000,4px 4px var(--pink);text-transform:uppercase}
+#result p{font:900 clamp(1rem,3vw,1.4rem)/1.4 system-ui,sans-serif}
+.continue{border:4px solid #000;background:var(--cyan);color:#000;padding:12px 20px;box-shadow:6px 6px #000;font-weight:1000;margin-top:12px}
+#page2{background:radial-gradient(circle at 50% 40%,#332047,transparent 45%),var(--bg)}
+.final-panel{width:min(850px,100%);background:#f4f0e8;color:#111;border:6px solid #000;box-shadow:12px 12px 0 var(--pink);padding:clamp(20px,5vw,45px);text-align:center;transform:rotate(-1deg);position:relative;z-index:2}
+.final-panel .tiny{font:1000 12px system-ui,sans-serif;letter-spacing:.16em}
+.final-panel h2{font-size:clamp(3rem,10vw,7rem);line-height:.9;margin:15px 0;text-transform:uppercase;text-shadow:4px 4px var(--cyan)}
+.final-panel p{font:900 clamp(1rem,3vw,1.5rem)/1.4 system-ui,sans-serif}
+.reaction-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:20px 0}
+.reaction{font:normal clamp(34px,6vw,58px)/1 system-ui,sans-serif;background:white;border:3px solid #111;padding:8px 12px;box-shadow:4px 4px #111;transform:rotate(var(--r))}
+.restart{border:4px solid #000;background:var(--yellow);padding:12px 18px;box-shadow:5px 5px #000;font-weight:1000}
+.confetti{position:fixed;top:-35px;z-index:20;pointer-events:none;font:normal 30px system-ui,sans-serif;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:0}}
+@media(max-width:600px){.page{padding:18px 12px}.meme-grid{gap:7px;margin:17px auto}.meme{min-height:100px;padding:8px 4px;border-width:3px;box-shadow:3px 3px #000}.choice{min-width:105px;padding:12px 20px}.buttons{gap:14px}.final-panel{box-shadow:7px 7px var(--pink)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<section class="page active" id="page1">
+  <div class="meme-rain" aria-hidden="true">
+    <span class="floater f1">💀</span><span class="floater f2">😭</span><span class="floater f3">🗿</span><span class="floater f4">🏳️‍🌈</span>
+  </div>
+  <main class="wrap">
+    <span class="top-tag">🚨 OY CHAT, MAY TANONG AKO 🚨</span>
+    <h1>Are you<br>gay?</h1>
+    <p class="subtitle">Sagutin mo nang maayos, boss D. Naka-live tayo. 😭</p>
+    <div class="meme-grid" aria-label="Meme reactions">
+      <div class="meme" style="--tilt:-2deg"><img class="sticker" src="https://media1.tenor.com/m/zq30w36dfkcAAAAd/tanginalala-tanginaanglala.gif" alt="Akosi Dogie Tanginalala reaction sticker" loading="lazy"><span class="caption">TANGINALALA 😭</span></div>
+      <div class="meme" style="--tilt:2deg"><img class="sticker" src="https://media1.tenor.com/m/hy_t0oqTND0AAAAd/ako-si-dogie-bobo-mo.gif" alt="Akosi Dogie reaction GIF" loading="lazy"><span class="caption">POTA, AMBOBO MO</span></div>
+      <div class="meme" style="--tilt:-1deg"><span class="pic">📢</span><span class="caption">ANONG GINAGAWA MO SA BUHAY MO?</span></div>
+      <div class="meme" style="--tilt:1deg"><span class="pic">🕵️‍♂️</span><span class="caption">MINAMANIPULATE NA TAYO</span></div>
+      <div class="meme" style="--tilt:-2deg"><span class="pic">😭🤚</span><span class="caption">SOBRA NA PANGUNGUPAL NIYO</span></div>
+      <div class="meme" style="--tilt:2deg"><span class="pic">🗿</span><span class="caption">BOSS D, EXPLAIN MO NGA</span></div>
+      <div class="meme" style="--tilt:-1deg"><span class="pic">🗣️🔥</span><span class="caption">ALKABS NA NAMAN 😭</span></div>
+      <div class="meme" style="--tilt:2deg"><span class="pic">💀📢</span><span class="caption">AKOSI DOGIE MOMENT</span></div>
+      <div class="meme" style="--tilt:-2deg"><span class="pic">😭🙏</span><span class="caption">CHAT, CLIP NIYO 'TO</span></div>
+      <div class="meme" style="--tilt:1deg"><span class="pic">🤨</span><span class="caption">ANO RAW?!</span></div>
+      <div class="meme" style="--tilt:-1deg"><span class="pic">🗿💯</span><span class="caption">AURA -9999</span></div>
+      <div class="meme" style="--tilt:2deg"><span class="pic">🚨😭</span><span class="caption">TANGINALALA ULIT</span></div>
+      <div class="meme" style="--tilt:-2deg"><span class="pic">🤡</span><span class="caption">BRO IS COOKED</span></div>
+      <div class="meme" style="--tilt:1deg"><span class="pic">🫵💀</span><span class="caption">IKAW NA IKAW, BOSS</span></div>
+      <div class="meme" style="--tilt:-1deg"><span class="pic">📉</span><span class="caption">WALANG AURA LEFT</span></div>
+      <div class="meme" style="--tilt:2deg"><span class="pic">🗣️‼️</span><span class="caption">SPEAK YOUR TRUTH</span></div>
+      <div class="meme" style="--tilt:-2deg"><span class="pic">💥</span><span class="caption">NA-ALKABS KA NA</span></div>
+    </div>
+    <div class="buttons">
+      <button class="choice" id="no" type="button">NO 💀</button>
+      <button class="choice" id="yes" type="button">YES 🏳️‍🌈</button>
+    </div>
+    <p class="hint" id="hint">Pumili ka na, boss. Naka-screen record na ’to. 💀</p>
+    <div class="bottom-note">100% KALOKOHAN • 0% SERIOUS • PARA SA GC LANG</div>
+    <div class="sticker-note">Reaction GIFs: <a href="https://tenor.com/view/tanginalala-tanginaanglala-akosidogie-dogie-akosidogiememe-gif-14892828663264149063" target="_blank" rel="noopener">Tanginalala</a> · <a href="https://tenor.com/view/ako-si-dogie-bobo-mo-streamer-gamer-mobile-legends-player-gif-17296738" target="_blank" rel="noopener">Dogie reaction</a></div>
+  </main>
+  <div id="result" role="status" aria-live="polite">
+    <div class="result-inner">
+      <div class="big-emoji" id="resultEmoji">🗿</div>
+      <h2 id="resultTitle">W RIZZ</h2>
+      <p id="resultText">The council has reached a verdict.</p>
+      <button class="continue" id="continue" type="button">NEXT LEVEL ➜</button>
+    </div>
+  </div>
+  <div id="dogieVideo" role="dialog" aria-modal="true" aria-label="Akosi Dogie meme video">
+    <div class="video-box">
+      <h2>AKOSI DOGIE JUMPSCARE 💀</h2>
+      <video id="dogieClip" controls playsinline preload="none">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      </video>
+      <p>ALKABS KA NA, BOSS 😭</p>
+      <button id="closeDogie" type="button">BALIK SA MEMES 🔁</button>
+      <p style="font:700 12px system-ui,sans-serif;color:#aaa">Demo clip placeholder — replace the video source with a TikTok/MP4 clip you have permission to use.</p>
+    </div>
+  </div>
+</section>
+<section class="page" id="page2">
+  <div class="meme-rain" aria-hidden="true">
+    <span class="floater f1">🏳️‍🌈</span><span class="floater f2">💅</span><span class="floater f3">😭</span><span class="floater f4">✨</span>
+  </div>
+  <main class="final-panel">
+    <div class="tiny">BREAKING NEWS SA GC ‼️</div>
+    <h2 id="finalTitle">BOSS D MOMENT.</h2>
+    <p id="finalText">Tapos na ang usapan. Chat, clip niyo ’to. 😭</p>
+    <div class="reaction-row" aria-label="Meme reactions">
+      <span class="reaction" style="--r:-8deg">💀</span><span class="reaction" style="--r:4deg">🗿</span><span class="reaction" style="--r:-3deg">😭</span><span class="reaction" style="--r:7deg">🏳️‍🌈</span>
+    </div>
+    <p>📢 I-send sa tropang laging may paliwanag. Wag niyo na pangungupalin masyado. 😭</p>
+    <button class="restart" id="restart" type="button">ULITIN NATIN, BOSS 🔁</button>
+  </main>
+</section>
+<script>
+(() => {
+ const no=document.getElementById('no'), yes=document.getElementById('yes');
+ const hint=document.getElementById('hint'), result=document.getElementById('result');
+ const resultEmoji=document.getElementById('resultEmoji'), resultTitle=document.getElementById('resultTitle');
+ const resultText=document.getElementById('resultText'), cont=document.getElementById('continue');
+ const page1=document.getElementById('page1'), page2=document.getElementById('page2');
+ const finalTitle=document.getElementById('finalTitle'), finalText=document.getElementById('finalText');
+ let noClicks=0, answer='';
+ const roasts=[
+  'MINAMANIPULATE NA TAYO 😭',
+  'SOBRA NA PANGUNGUPAL NIYO, CHAT 💀',
+  'ANONG GINAGAWA MO SA BUHAY MO, BOSS D?!'
+ ];
+ const yesScale=[1.18,1.42,1.72];
+ const noScale=[.82,.62,.42];
+ no.addEventListener('click',()=>{
+   noClicks=Math.min(noClicks+1,3);
+   yes.style.transform=`scale(${yesScale[noClicks-1]}) rotate(2deg)`;
+   yes.style.padding=`${14+noClicks*3}px ${30+noClicks*6}px`;
+   no.style.transform=`scale(${noScale[noClicks-1]}) rotate(-2deg)`;
+   no.style.fontSize=`${Math.max(.65,1.15-noClicks*.16)}rem`;
+   hint.textContent=roasts[noClicks-1];
+ });
+ function confettiBurst(){
+   const bits=['💀','😭','✨','🏳️‍🌈','🗿','💅','🔥','🤡'];
+   for(let i=0;i<45;i++){
+     const el=document.createElement('span'); el.className='confetti';
+     el.textContent=bits[Math.floor(Math.random()*bits.length)];
+     el.style.left=Math.random()*100+'vw';
+     el.style.animationDuration=(2+Math.random()*2.5)+'s';
+     el.style.animationDelay=Math.random()*.4+'s';
+     document.body.appendChild(el); setTimeout(()=>el.remove(),5000);
+   }
+ }
+ function showResult(which){
+   answer=which;
+   if(which==='yes'){
+     resultEmoji.textContent='😭'; resultTitle.textContent='TANGINALALA';
+     resultText.textContent='Boss D stood on business. Chat, bigyan ng isang malakas na palakpak. 😭👏';
+   }else{
+     resultEmoji.textContent='🗿'; resultTitle.textContent='MINAMANIPULATE?!';
+     resultText.textContent='Walang lusot sa GC, boss. Naka-clip na lahat. 💀';
+   }
+   result.classList.add('show'); confettiBurst();
+ }
+ yes.addEventListener('click',()=>showResult('yes'));
+ no.addEventListener('dblclick',()=>showResult('no'));
+ cont.addEventListener('click',()=>{
+   result.classList.remove('show');
+   page1.classList.remove('active'); page2.classList.add('active');
+   if(answer==='yes'){finalTitle.textContent='BOSS D MOMENT.';finalText.textContent='Diretso sumagot. Walang atrasan. Aura +1000. 😭';}
+   else{finalTitle.textContent='MINAMANIPULATE NA TAYO.';finalText.textContent='Nag-no na nga, naging content pa. Chat, clip that. 💀';}
+   window.scrollTo({top:0,behavior:'smooth'});
+ });
+ document.getElementById('restart').addEventListener('click',()=>{
+   page2.classList.remove('active'); page1.classList.add('active');
+   noClicks=0; answer=''; no.style.transform='';no.style.fontSize='';yes.style.transform='';yes.style.padding='';
+   hint.textContent='Pumili ka na, boss. Naka-screen record na ’to. 💀';
+   window.scrollTo({top:0,behavior:'smooth'});
+ });
+})();
+</script>
+</body>
+</html>
